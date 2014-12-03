@@ -137,7 +137,11 @@ BEGIN
 	curr.ts_date::date
    having sum(case when (curr.ts_table_size - coalesce(prev.ts_table_size,0) < 0) then curr.ts_table_size	
 	         else curr.ts_table_size - coalesce(prev.ts_table_size,0)
-	    end) > 0; -- only >0 sizes
+	    end) > 0
+	   OR sum(case when (curr.ts_seq_scans - coalesce(prev.ts_seq_scans,0) < 0) then curr.ts_seq_scans
+	         else curr.ts_seq_scans - coalesce(prev.ts_seq_scans,0)
+	    end) > 0
+	   ; -- only if size delta OR seq scans >0 (or seq scans added NOV14)
 
 END;
 $$
