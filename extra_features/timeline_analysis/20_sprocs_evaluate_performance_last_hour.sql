@@ -140,6 +140,7 @@ BEGIN
 	      on hosts.host_id = ss.ss_host_id
 	   where ss.ss_date = p_date and
 		 ss.ss_hour = p_hour and
+		 ss.ss_sproc_name != ' ' and -- ignore the host totals
 		 not ss.ss_is_suspect and
 		 tmp.sum_total_time > 0 and
 		 tmp.sum_calls > 0 and
@@ -191,6 +192,7 @@ BEGIN
 	      on hosts.host_id = ss.ss_host_id
 	   where ss.ss_date = p_date and
 		 ss.ss_hour = p_hour and
+ 		 ss.ss_sproc_name != ' ' and -- ignore the host totals
 		 not ss.ss_is_suspect and
 		 ss.ss_total_time > l_time_threshod and
 		 tmp.sum_total_time > 0 and
